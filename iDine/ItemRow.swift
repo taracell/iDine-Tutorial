@@ -31,7 +31,7 @@ struct ItemRow: View {
                     .foregroundColor(.white)
             }
             //end ForEach
-            NavigationLink(destination: ItemRow(item: item)) {
+            NavigationLink(destination: ItemDetail(item: item)) {
                 // existing contents…
             }
         }

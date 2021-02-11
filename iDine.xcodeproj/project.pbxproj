@@ -70,6 +70,7 @@
 		57A2917B25D3251000F5F789 /* iDine */ = {
 			isa = PBXGroup;
 			children = (
+				57B95C2425D5B038005B42FD /* New Group */,
 				57A2919025D3258C00F5F789 /* Helper.swift */,
 				57A2918D25D3258C00F5F789 /* menu.json */,
 				57A2918E25D3258C00F5F789 /* Menu.swift */,
@@ -94,6 +95,13 @@
 				57A2918325D3251100F5F789 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		57B95C2425D5B038005B42FD /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
