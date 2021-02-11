@@ -22,9 +22,21 @@ struct CheckoutView : View {
     @State private var addLoyaltyDetails = false
     @State private var loyaltyNumber = ""
     @State private var tipAmount = 15
-    
+    @State private var pickUpTime = Date()
+    @State private var showingPaymentAlert = false
+
     let tipAmounts = [10, 15, 20, 25, 0]
     let paymentTypes = ["Cash", "Credit Card", "iDine Points"]
+    
+    var totalPrice: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        
+        let total = Double(order.total)
+        let tipValue = total / 100 * Double(tipAmount)
+        
+        return formatter.string(from: NSNumber(value: total + tipValue)) ?? "$0"
+    }
     
     var body: some View{
         Form {
@@ -41,6 +53,18 @@ struct CheckoutView : View {
                     }
                 }
             }
+            ///Challenge #2 from the Tutorial (modified)
+            Section(header: Text("Pick up Time")) {
+                    HStack{
+                        Image(systemName: "calendar").font(.title)
+                    DatePicker("", selection: $pickUpTime,
+                        displayedComponents: [.date, .hourAndMinute])
+                        .labelsHidden()
+                        .font(.title)
+                        .animation(/*@START_MENU_TOKEN@*/.easeIn/*@END_MENU_TOKEN@*/)
+                        .accentColor(.purple)
+                    }
+            }
             Section(header: Text("Add a tip?")) {
                 Picker("Percentage:", selection: $tipAmount) {
                     ForEach(tipAmounts, id: \.self) {
@@ -50,31 +74,38 @@ struct CheckoutView : View {
                 .pickerStyle(SegmentedPickerStyle())
             }
             Section(header:
-                        Text("TOTAL: $100")
+                        Text("TOTAL: \(totalPrice)")
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
             ) {
+                ///Challenge # 1 from the Tutorial (modified)
                 Button(action: {
+                    showingPaymentAlert.toggle()
                     print("Confirm Order tapped!")
                 }) {
                     HStack {
                         Image(systemName: "dollarsign.circle")
                             .font(.title)
+                            .animation(.linear)
+
                         Text("Confirm Order")
                             .fontWeight(.semibold)
                             .font(.title)
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
-                    .foregroundColor(.blue)
-                    .cornerRadius(40)
+                    .foregroundColor(.purple)
                 }
             }
         }
-        
+        .alert(isPresented: $showingPaymentAlert) {
+            Alert(title: Text("Order confirmed"), message: Text("Your total was \(totalPrice) \n Please pick up your order on \(pickUpTime)\n– thank you!"), dismissButton: .default(Text("OK")))
+        }
         .navigationTitle("Payment")
         .navigationBarTitleDisplayMode(.inline)
     }
-    
-    
 }
+
+
 
 #if DEBUG
 struct CheckoutView_Previews: PreviewProvider {

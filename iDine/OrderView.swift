@@ -4,7 +4,7 @@
 //
 //  Created by Tara on 2/10/21.
 //  This screen shows the order placed by the user
-//  This has a list with two sections almost like a column with a list in Dart.  Transferring from Dart or javaFX The Navigation View shows 
+//  This has a list with two sections almost like a column with a list in Dart.  Transferring from Dart or JavaFX The Navigation View shows
 
 import Foundation
 import SwiftUI
@@ -22,6 +22,7 @@ struct OrderView : View {
                             Text("$\(item.price)")
                         }
                     }
+                    .onDelete(perform: deleteItems)
                 }
                 Section {
                     NavigationLink(
@@ -29,12 +30,22 @@ struct OrderView : View {
                         Text("Place Order")
                     }
                 }
+                .disabled(order.items.isEmpty)
             }
             .navigationTitle("Order")
             .listStyle(InsetGroupedListStyle())
+            .toolbar {
+                EditButton()
+            }
         }
     }
+    
+    func deleteItems(at offsets: IndexSet) {
+        order.items.remove(atOffsets: offsets)
+    }
 }
+
+
     
 struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
