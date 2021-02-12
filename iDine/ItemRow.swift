@@ -20,7 +20,7 @@ struct ItemRow: View {
                 Text(item.name)
                 Text("$\(item.price)")
             }
-            //vstack
+            ///vstack
             ForEach(item.restrictions, id: \.self) { restriction in
                 Text(restriction)
                     .font(.caption)
@@ -30,9 +30,9 @@ struct ItemRow: View {
                     .clipShape(Circle())
                     .foregroundColor(.white)
             }
-            //end ForEach
+            ///end ForEach
             NavigationLink(destination: ItemDetail(item: item)) {
-                // existing contents…
+                /// existing contents…
             }
         }
         //hstack

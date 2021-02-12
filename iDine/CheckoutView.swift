@@ -22,7 +22,8 @@ struct CheckoutView : View {
     @State private var addLoyaltyDetails = false
     @State private var loyaltyNumber = ""
     @State private var tipAmount = 15
-    @State private var pickUpTime = Date()
+    ///adds 20 min to the current time to allow for restraunt reciept and production of order
+    @State private var pickUpTime = Date() + 20 * 60
     @State private var showingPaymentAlert = false
 
     let tipAmounts = [10, 15, 20, 25, 0]
